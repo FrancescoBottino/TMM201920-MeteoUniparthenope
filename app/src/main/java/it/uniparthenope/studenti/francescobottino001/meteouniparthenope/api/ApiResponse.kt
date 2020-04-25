@@ -1,45 +1,37 @@
 package it.uniparthenope.studenti.francescobottino001.meteouniparthenope.api
 
-import org.json.JSONObject
-import org.json.JSONTokener
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.ModelType
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.ModelTypeFactory
+import kotlin.reflect.KClass
 
-class ApiResponse(response: String) {
+class ApiResponse<T: ModelType>(response: String, type: KClass<T>) {
 
     var success: Boolean = false
-    var message: String = ""
+    var error: String = ""
     var json: String = ""
-
-    private val result = "result"
-    private val successful = "ok"
-    private val details = "details"
-    private val forecast = "forecast"
+    var message: T? = null
 
     init {
+        json = response
         try {
-            val jsonToken = JSONTokener(response).nextValue()
-            if (jsonToken is JSONObject) {
-                val jsonRsponse = JSONObject(response)
-
-                message = if (
-                    jsonRsponse.has(result) &&
-                    jsonRsponse.getString(result) == successful &&
-                    jsonRsponse.has(forecast)
-                ) {
-                    jsonRsponse.getJSONObject(forecast).toString()
-                } else {
-                    "An error was occurred while processing the response : ${jsonRsponse.getString(details)}"
-                }
-
-                if (jsonRsponse.optJSONObject(forecast) != null) {
-                    json = jsonRsponse.getJSONObject(forecast).toString()
-                    success = true
-                } else {
-                    success = false
-                }
-
-            }
+            if( response.isEmpty() ) throw Exception("Empty response")
+            message = ModelTypeFactory.parse<T>(response, type)
+            success = true
+            error = ""
         } catch (e: Exception) {
             e.printStackTrace()
+            error = e.message?:"Parsing Error"
+            success = false
+            message = null
+        }
+    }
+
+    companion object {
+        fun <T: ModelType> getErrorResponse(error:String, type:KClass<T>) : ApiResponse<T> {
+            val errorResponse = ApiResponse<T>(error, type)
+            errorResponse.error = error
+
+            return errorResponse
         }
     }
 }
