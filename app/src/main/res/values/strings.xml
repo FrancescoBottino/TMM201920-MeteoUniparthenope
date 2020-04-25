@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Meteo Uniparthenope</string>
+    <string name="date_parse_error">Error parsing date</string>
+    <string name="nuvolosita">Nuvolosità : %s%%</string>
+    <string name="submit_button_text">Meteo</string>
 </resources>

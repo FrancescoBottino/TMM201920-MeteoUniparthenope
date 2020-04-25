@@ -1,4 +1,4 @@
-package it.uniparthenope.studenti.francescobottino001.meteouniparthenope
+package it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models
 
 import com.google.gson.Gson
 import org.json.JSONArray
