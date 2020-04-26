@@ -5,6 +5,7 @@ import com.android.volley.*
 import com.android.volley.toolbox.*
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Forecast
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.ModelType
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Places
 import kotlin.reflect.KClass
 
 class ApiClient(private val ctx: Context) {
@@ -80,9 +81,23 @@ class ApiClient(private val ctx: Context) {
     /**
      * --------- GET FORECAST ----------------------------
      **/
-    fun forecast(place: String, completion: (forecast: Forecast?, error: String?) -> Unit) {
-        val route = ApiRoute.Forecast(place)
+    fun forecast(placeCode: String, completion: (forecast: Forecast?, error: String?) -> Unit) {
+        val route = ApiRoute.Forecast(placeCode)
         this.performRequest(route, Forecast::class) { success, response ->
+            if (success) {
+                completion.invoke(response.message!!, null)
+            } else {
+                completion.invoke(null, response.error)
+            }
+        }
+    }
+
+    /**
+     * --------- GET AUTOCOMPLETE NAMES ------------------
+     */
+    fun searchPlace(name: String, completion: (places: Places?, error: String?) -> Unit) {
+        val route = ApiRoute.SearchPlace(name)
+        this.performRequest(route, Places::class) { success, response ->
             if (success) {
                 completion.invoke(response.message!!, null)
             } else {

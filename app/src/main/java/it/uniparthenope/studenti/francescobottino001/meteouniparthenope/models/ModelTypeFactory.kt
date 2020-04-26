@@ -8,6 +8,7 @@ class ModelTypeFactory {
         fun <T:ModelType> parse(json: String, type: KClass<T>) : T? {
             return when(type) {
                 Forecast::class -> Forecast.parse(json) as T
+                Places::class -> Places.parse(json) as T
                 else -> null
             }
         }

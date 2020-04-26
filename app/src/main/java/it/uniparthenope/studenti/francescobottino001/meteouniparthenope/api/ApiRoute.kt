@@ -14,19 +14,26 @@ sealed class ApiRoute {
             return "http://api.meteo.uniparthenope.it"
         }
 
-    data class Forecast(var place:String) : ApiRoute()
+    data class Forecast(var placeCode:String) : ApiRoute()
+    data class SearchPlace(var name:String) : ApiRoute()
 
     val httpMethod: Int
         get() {
             return when (this) {
                 is Forecast -> Request.Method.GET
+                is SearchPlace -> Request.Method.GET
             }
         }
 
     val params: HashMap<String, String>
         get() {
+            val params: HashMap<String, String> = hashMapOf()
             return when (this) {
-                else -> hashMapOf()
+                is SearchPlace -> {
+                    params["term"] = name
+                    params
+                }
+                else -> params
             }
         }
 
@@ -42,7 +49,8 @@ sealed class ApiRoute {
     val url: String
         get() {
             return "$baseUrl/${when (this@ApiRoute) {
-                is Forecast -> "products/wrf5/forecast/${this.place}"
+                is Forecast -> "products/wrf5/forecast/${this.placeCode}"
+                is SearchPlace -> "places/search/byname/autocomplete"
             }}"
         }
 }
