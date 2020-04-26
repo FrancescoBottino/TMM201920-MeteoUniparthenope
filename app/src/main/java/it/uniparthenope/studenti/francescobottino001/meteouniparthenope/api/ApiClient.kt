@@ -14,13 +14,13 @@ class ApiClient(private val ctx: Context) {
      */
     private fun <T:ModelType> performRequest(route: ApiRoute, type:KClass<T>, completion: (success: Boolean, apiResponse: ApiResponse<T>) -> Unit) {
         val request: StringRequest = object : StringRequest(route.httpMethod, route.url, { response ->
-            this.handle(response, type, completion)
+            this.handleResponse(response, type, completion)
         }, {
             it.printStackTrace()
             if (it.networkResponse != null && it.networkResponse.data != null)
-                this.getErrorResponse(String(it.networkResponse.data), type, completion)
+                this.handleError(String(it.networkResponse.data), type, completion)
             else
-                this.getErrorResponse(getStringError(it), type, completion)
+                this.handleError(getStringError(it), type, completion)
         }) {
             override fun getParams(): MutableMap<String, String> {
                 return route.params
@@ -37,7 +37,7 @@ class ApiClient(private val ctx: Context) {
     /**
      * This method will make the creation of the error as ApiResponse
      **/
-    private fun <T:ModelType> getErrorResponse(error: String, type:KClass<T>, completion: (success: Boolean, apiResponse: ApiResponse<T>) -> Unit) {
+    private fun <T:ModelType> handleError(error: String, type:KClass<T>, completion: (success: Boolean, apiResponse: ApiResponse<T>) -> Unit) {
         val ar = ApiResponse.getErrorResponse(error,type)
         completion.invoke(ar.success, ar)
     }
@@ -45,7 +45,7 @@ class ApiClient(private val ctx: Context) {
     /**
      * This method will make the creation of the answer as ApiResponse
      **/
-    private fun <T:ModelType> handle(response: String, type:KClass<T>, completion: (success: Boolean, apiResponse: ApiResponse<T>) -> Unit) {
+    private fun <T:ModelType> handleResponse(response: String, type:KClass<T>, completion: (success: Boolean, apiResponse: ApiResponse<T>) -> Unit) {
         val ar = ApiResponse<T>(response, type)
         completion.invoke(ar.success, ar)
     }
