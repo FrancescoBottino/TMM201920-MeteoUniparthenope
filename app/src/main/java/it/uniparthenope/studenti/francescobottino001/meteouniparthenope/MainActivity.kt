@@ -41,6 +41,18 @@ class MainActivity : AppCompatActivity() {
                     nuvolosita.text = String.format(getString(R.string.nuvolosita), result.nuvolosita)
                     forecast_content.addView(nuvolosita)
 
+                    val pressione = TextView(this@MainActivity, null, R.style.ResultTextView)
+                    pressione.text = String.format(getString(R.string.pressione), result.pressione)
+                    forecast_content.addView(pressione)
+
+                    val temperatura = TextView(this@MainActivity, null, R.style.ResultTextView)
+                    temperatura.text = String.format(getString(R.string.temperatura), result.temperatura)
+                    forecast_content.addView(temperatura)
+
+                    val temperaturaPercepita = TextView(this@MainActivity, null, R.style.ResultTextView)
+                    temperaturaPercepita.text = String.format(getString(R.string.temperatura_percepita), result.temperaturaPercepita)
+                    forecast_content.addView(temperaturaPercepita)
+
                     /**
                      * TODO(Implement remaining Forecast::class fields visualization)
                      **/
