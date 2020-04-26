@@ -1,15 +1,24 @@
 package it.uniparthenope.studenti.francescobottino001.meteouniparthenope
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.api.ApiClient
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.api.ApiRoute
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.extensions.TAG
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Forecast
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Place
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Places
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.forecast_result.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,45 +26,54 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val place = "com63049"
+        val adapter = PlacesAdapter(ArrayList(), this::mostraMeteo)
+        list_of_places.adapter = adapter
+        list_of_places.layoutManager = LinearLayoutManager(this)
 
         button_submit.setOnClickListener {
-            ApiClient(this@MainActivity).forecast(place) { result: Forecast?, error: String? ->
-                if( error != null || result == null ) {
-                    Toast.makeText(this@MainActivity, error, Toast.LENGTH_LONG).show()
-                    return@forecast
+            val place = input_testo.text.toString()
+            if( place.isEmpty() ) {
+                input_testo.error = "Inserisci località"
+                return@setOnClickListener
+            }
+
+            Log.d(TAG, "Searching for places with name ${place}")
+            Log.d(TAG, "Request is : ${ApiRoute.SearchPlace(place).url}")
+
+            ApiClient(this@MainActivity).searchPlace(place) { places: Places?, error: String? ->
+
+                Log.d(TAG, "Results obtained ->")
+                if( error != null ) {
+                    Log.d(TAG, "Error ( $error )")
+                    runOnUiThread {
+                        Toast.makeText(
+                            this@MainActivity,
+                            error,
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    return@searchPlace
                 }
-                
-                val date: Date? = SimpleDateFormat("yyyyMMddHHmm", Locale.ITALIAN).parse(result.data.replace("Z",""))
-
-                forecast_data.text =
-                    if(date != null)
-                        SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ITALIAN).format(date)
-                    else
-                        getString(R.string.date_parse_error)
-
-                forecast_previsione.text = result.previsione.it
-
-                val nuvolosita = TextView(this@MainActivity, null, R.style.ResultTextView)
-                nuvolosita.text = String.format(getString(R.string.nuvolosita), result.nuvolosita)
-                forecast_content.addView(nuvolosita)
-
-                val pressione = TextView(this@MainActivity, null, R.style.ResultTextView)
-                pressione.text = String.format(getString(R.string.pressione), result.pressione)
-                forecast_content.addView(pressione)
-
-                val temperatura = TextView(this@MainActivity, null, R.style.ResultTextView)
-                temperatura.text = String.format(getString(R.string.temperatura), result.temperatura)
-                forecast_content.addView(temperatura)
-
-                val temperaturaPercepita = TextView(this@MainActivity, null, R.style.ResultTextView)
-                temperaturaPercepita.text = String.format(getString(R.string.temperatura_percepita), result.temperaturaPercepita)
-                forecast_content.addView(temperaturaPercepita)
-
-                /**
-                 * TODO(Implement remaining Forecast::class fields visualization)
-                 **/
+                if( places != null ) {
+                    Log.d(TAG, "Result : ${places.array.size} places")
+                    adapter.setData( places.array )
+                    return@searchPlace
+                }
+                runOnUiThread {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Unknown error",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
             }
         }
+    }
+
+    fun mostraMeteo( place:Place ) {
+        val intent = Intent(this, MeteoActivity::class.java)
+        intent.putExtra("place_code",place.codice)
+        intent.putExtra("place_name",place.nome)
+        startActivity(intent)
     }
 }

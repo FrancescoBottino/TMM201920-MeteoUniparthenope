@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Meteo Uniparthenope</string>
     <string name="date_parse_error">Error parsing date</string>
-    <string name="submit_button_text">Meteo</string>
+    <string name="submit_button_text">Cerca</string>
 
     <string name="nuvolosita">Nuvolosità : %s %%</string>
     <string name="pressione">Pressione : %f HPa</string>
     <string name="temperatura">Temperatura : %f °C</string>
     <string name="temperatura_percepita">Temperatura percepita : %f °C</string>
+    <string name="where_forecast">Dove?</string>
 </resources>

@@ -53,6 +53,7 @@ data class Forecast(
     JSONConvertable {
     companion object {
         fun parse(response: String): Forecast {
+            //TODO (Update method using GSon)
             val result = "result"
             val successful = "ok"
             val details = "details"
@@ -75,7 +76,7 @@ data class Forecast(
                 throw Exception("Could not find forecast data in JSON response")
 
             try {
-                return jsonResponse.getJSONObject(forecast).toString().toObject<Forecast>()
+                return jsonResponse.getJSONObject(forecast).toString().toObject()
             } catch (e:Exception) {
                 e.printStackTrace()
                 throw Exception("Error parsing forecast json",e)

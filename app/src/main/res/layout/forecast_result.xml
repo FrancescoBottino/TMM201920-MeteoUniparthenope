@@ -7,6 +7,20 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/forecast_luogo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Golfo di napoli" />
+
+    <TextView
         android:id="@+id/forecast_previsione"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -15,7 +29,7 @@
         android:textSize="24sp"
         app:layout_constraintEnd_toStartOf="@+id/forecast_data"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forecast_luogo"
         tools:text="Nuvoloso" />
 
     <TextView

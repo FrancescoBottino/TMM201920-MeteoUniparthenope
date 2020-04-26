@@ -29,10 +29,10 @@ sealed class ApiRoute {
         get() {
             val params: HashMap<String, String> = hashMapOf()
             return when (this) {
-                is SearchPlace -> {
+                /*is SearchPlace -> {
                     params["term"] = name
                     params
-                }
+                }*/
                 else -> params
             }
         }
@@ -50,7 +50,7 @@ sealed class ApiRoute {
         get() {
             return "$baseUrl/${when (this@ApiRoute) {
                 is Forecast -> "products/wrf5/forecast/${this.placeCode}"
-                is SearchPlace -> "places/search/byname/autocomplete"
+                is SearchPlace ->  "places/search/byname/autocomplete${if(name.isNotEmpty()) "?term=${name.replace(" ","%20")}" else ""}"
             }}"
         }
 }
