@@ -2,7 +2,10 @@ package it.uniparthenope.studenti.francescobottino001.meteouniparthenope.api
 
 import android.content.Context
 import com.android.volley.*
-import com.android.volley.toolbox.*
+import com.android.volley.toolbox.BasicNetwork
+import com.android.volley.toolbox.DiskBasedCache
+import com.android.volley.toolbox.HurlStack
+import com.android.volley.toolbox.StringRequest
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Forecast
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.ModelType
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Places
@@ -65,6 +68,7 @@ class ApiClient(private val ctx: Context) {
             else -> "Internet error"
         }
     }
+
     /**
      * We create and return a new instance for the queue of Volley requests.
      **/

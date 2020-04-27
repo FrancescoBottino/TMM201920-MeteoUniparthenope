@@ -3,7 +3,6 @@ package it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models
 import com.google.gson.annotations.SerializedName
 import org.json.JSONObject
 import org.json.JSONTokener
-import java.lang.Exception
 
 data class Forecast(
     @SerializedName("text")

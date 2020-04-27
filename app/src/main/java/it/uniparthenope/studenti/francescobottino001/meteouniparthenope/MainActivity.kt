@@ -1,24 +1,17 @@
 package it.uniparthenope.studenti.francescobottino001.meteouniparthenope
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.api.ApiClient
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.api.ApiRoute
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.extensions.TAG
-import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Forecast
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Place
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Places
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.forecast_result.*
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 

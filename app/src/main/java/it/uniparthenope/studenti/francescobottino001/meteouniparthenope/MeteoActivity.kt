@@ -1,14 +1,13 @@
 package it.uniparthenope.studenti.francescobottino001.meteouniparthenope
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.api.ApiClient
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Forecast
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Place
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_meteo.*
 import kotlinx.android.synthetic.main.forecast_result.*
 import kotlinx.android.synthetic.main.progress_overlay.*
