@@ -1,4 +1,4 @@
-package it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models
+package it.uniparthenope.studenti.francescobottino001.meteouniparthenope.extensions
 
 import com.google.gson.Gson
 import org.json.JSONArray
@@ -9,6 +9,8 @@ interface JSONConvertable : Serializable {
 }
 
 inline fun <reified T : JSONConvertable> String.toObject(): T = Gson().fromJson(this, T::class.java)
+
+inline fun <reified T : JSONConvertable> String.toObjectArray(): Array<T> = Gson().fromJson(this, Array<T>::class.java)
 
 inline fun <reified T : JSONConvertable> JSONArray.toArrayList(): ArrayList<T> {
     val array: ArrayList<T> = arrayListOf()

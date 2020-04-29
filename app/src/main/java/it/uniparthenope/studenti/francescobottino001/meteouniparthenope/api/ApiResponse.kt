@@ -20,7 +20,7 @@ class ApiResponse<T: ModelType>(response: String, type: KClass<T>) {
             error = ""
         } catch (e: Exception) {
             e.printStackTrace()
-            error = e.message?:"Parsing Error"
+            error = "Parsing Error${if( e.message!=null ) ", (${e.message})" else ""}"
             success = false
             message = null
         }

@@ -15,7 +15,7 @@ class TestApi {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         ApiClient(appContext).searchPlace("Comune di Napoli") { result: Places?, error: String? ->
             Assert.assertNotNull(result)
-            val places: Places = result?: Places(listOf())
+            val places: Places = result?: Places(ArrayList())
             Assert.assertEquals(1, places.array.size)
             Assert.assertEquals("com63049", places.array[0].codice)
         }
@@ -26,7 +26,7 @@ class TestApi {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         ApiClient(appContext).searchPlace("Napoli") { result: Places?, error: String? ->
             Assert.assertNotNull(result)
-            val places: Places = result?: Places(listOf())
+            val places: Places = result?: Places(ArrayList())
             Assert.assertEquals(20, places.array.size)
             Assert.assertEquals("com63048", places.array[5].codice)
             Assert.assertEquals("com63049", places.array[6].codice)

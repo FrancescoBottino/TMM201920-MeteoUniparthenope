@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Place
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Places
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Places.Place
 
-class PlacesAdapter(private var dataSet: List<Place>, private val onItemClick: ( place:Place ) -> Unit) : RecyclerView.Adapter<PlacesAdapter.PlaceViewHolder>() {
+class PlacesAdapter(private var dataSet: ArrayList<Place>, private val onItemClick: (place:Place ) -> Unit) : RecyclerView.Adapter<PlacesAdapter.PlaceViewHolder>() {
     class PlaceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
@@ -24,7 +25,7 @@ class PlacesAdapter(private var dataSet: List<Place>, private val onItemClick: (
     }
 
     override fun getItemCount() = dataSet.size
-    fun setData(newDataSet: List<Place>) {
+    fun setData(newDataSet: ArrayList<Place>) {
         dataSet = newDataSet
         notifyDataSetChanged()
     }

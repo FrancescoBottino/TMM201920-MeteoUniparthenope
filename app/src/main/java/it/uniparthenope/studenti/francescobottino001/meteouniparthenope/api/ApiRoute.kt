@@ -11,7 +11,7 @@ sealed class ApiRoute {
 
     val baseUrl: String
         get() {
-            return "http://api.meteo.uniparthenope.it"
+            return "https://api.meteo.uniparthenope.it"
         }
 
     data class Forecast(var placeCode:String) : ApiRoute()
@@ -29,10 +29,6 @@ sealed class ApiRoute {
         get() {
             val params: HashMap<String, String> = hashMapOf()
             return when (this) {
-                /*is SearchPlace -> {
-                    params["term"] = name
-                    params
-                }*/
                 else -> params
             }
         }

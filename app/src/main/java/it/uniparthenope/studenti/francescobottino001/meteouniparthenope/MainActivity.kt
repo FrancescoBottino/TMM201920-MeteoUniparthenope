@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.api.ApiClient
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.api.ApiRoute
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.extensions.TAG
-import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Place
 import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Places
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models.Places.Place
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

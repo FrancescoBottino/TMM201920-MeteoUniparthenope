@@ -1,6 +1,8 @@
 package it.uniparthenope.studenti.francescobottino001.meteouniparthenope.models
 
 import com.google.gson.annotations.SerializedName
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.extensions.JSONConvertable
+import it.uniparthenope.studenti.francescobottino001.meteouniparthenope.extensions.toObject
 import org.json.JSONObject
 import org.json.JSONTokener
 
@@ -48,11 +50,9 @@ data class Forecast(
     @SerializedName("ws10n")
     var direzioneVento10m_Nodi: Float
 
-) : ModelType,
-    JSONConvertable {
+) : ModelType, JSONConvertable {
     companion object {
         fun parse(response: String): Forecast {
-            //TODO (Update method using GSon)
             val result = "result"
             val successful = "ok"
             val details = "details"
@@ -77,7 +77,6 @@ data class Forecast(
             try {
                 return jsonResponse.getJSONObject(forecast).toString().toObject()
             } catch (e:Exception) {
-                e.printStackTrace()
                 throw Exception("Error parsing forecast json",e)
             }
         }
